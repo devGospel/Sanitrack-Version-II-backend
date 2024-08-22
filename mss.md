@@ -1,0 +1,1 @@
+To get the next clean date for an asset, get it from the work schedule. Check if the item is present in any of the work schedules and then if it is and if it is multiple, get the closest date. 

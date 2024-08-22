@@ -1,0 +1,90 @@
+name: CI/CD Pipeline Sanitrack-BE
+
+on:
+  push:
+    branches: [ development ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 18.x
+
+      - name: Test App
+        run: cat package.json
+
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create Env File
+        run: |
+          touch .env
+          echo PORT=${{ secrets.PORT }} >> .env
+          echo JWT_KEY=${{ secrets.JWT_KEY }} >> .env
+          echo TOKEN_VALIDATION_DURATION=${{ secrets.TOKEN_VALIDATION_DURATION }} >> .env
+          echo MONGODB_URI=${{ secrets.MONGODB_URI }} >> .env
+          echo P_M=${{ secrets.P_M }} >> .env
+          echo U_M=${{ secrets.U_M }} >> .env
+          echo LOCAL_URL=${{ secrets.LOCAL_URL }} >> .env
+          echo LIVE_URL=${{ secrets.LIVE_URL }} >> .env
+          echo cloudinary_cloud=${{ secrets.cloudinary_cloud }} >> .env
+          echo cloudinary_api__key=${{ secrets.cloudinary_api__key }} >> .env
+          echo cloudinary_api_secret=${{ secrets.cloudinary_api_secret }} >> .env
+          echo MY_EMAIL=${{ secrets.MY_EMAIL }} >> .env
+          echo APP_PASSWORD=${{ secrets.APP_PASSWORD }} >> .env
+          echo VAPID_PRIVATE_KEY=${{ secrets.VAPID_PRIVATE_KEY }} >> .env
+          echo VAPID_PUBLIC_KEY=${{ secrets.VAPID_PUBLIC_KEY }} >> .env
+          echo GOOGLE_REFRESH_TOKEN=${{ secrets.GOOGLE_REFRESH_TOKEN }} >> .env
+          echo GOOGLE_ACCESS_TOKEN=${{ secrets.GOOGLE_ACCESS_TOKEN }} >> .env
+          echo GOOGLE_AUTH_CLIENT_ID=${{ secrets.GOOGLE_AUTH_CLIENT_ID }} >> .env
+          echo GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} >> .env                    
+          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+          echo S3_BUCKET_NAME=${{ secrets.S3_BUCKET_NAME }} >> .env
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          
+      - name: Build and push backend
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: oriontechmen/sanitrack-backend-second:dev
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Deploy to Ec2 Instance
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST_DEV }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        script: |
+          sh prune.sh
+          sudo chmod 666 /var/run/docker.sock
+          cd sanitrack-backend-002/
+          git checkout development
+          git pull origin development
+          docker-compose stop
+          docker-compose rm -f
+          docker-compose pull   
+          docker-compose up -d

@@ -1,0 +1,37 @@
+{
+    "cleaner": "user_id_here",
+    "evidence": [
+      {
+        "workOrderId": "work_order_id_1",
+        "assetId": "asset_id_1",
+        "images": [
+          {
+            "image": "image_file_1.jpg"
+          },
+          {
+            "image": "image_file_2.jpg"
+          },
+          {
+            "image": "image_file_3.jpg"
+          }
+        ],
+        "videos": [
+            {
+                "videos": "vieos_.mpg"
+            }
+        ]
+      },
+      {
+        "workOrderId": "work_order_id_2",
+        "assetId": "asset_id_2",
+        "images": [
+          {
+            "image": "image_file_4.jpg"
+          },
+          {
+            "image": "image_file_5.jpg"
+          }
+        ]
+      }
+    ]
+  }

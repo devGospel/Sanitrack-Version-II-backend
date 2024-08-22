@@ -1,0 +1,72 @@
+---
+paths: 
+  /api/cleaner-dashboard:
+    get:
+      tags:
+        - CLEANER DASHBOARD
+      summary: GET CLEANER ROOMS
+      produces: 
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Fetched successfully
+
+  /api/cleaner-dashboard/room-details/{roomId}:
+    get:
+      tags:
+        - CLEANER DASHBOARD
+      summary: GET ROOM DETAILS BY ROOM ID ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: path
+          name: roomId
+          type: string
+          default: 65a20e8990b510fb131ca021
+          required: true  
+      responses:
+        200:
+          description: Room Details fetched successfully
+  
+  /api/cleaner-dashboard/room-details/:
+    post: 
+      tags:
+        - CLEANER DASHBOARD  
+      summary: UPLOAD ENDPOINT (cleaner selects file and uploads)
+      consumes:
+        - multipart/form-data
+      parameters:
+        - in: header
+          name: authorization
+          description: Access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: formData
+          name: files
+          type: array
+          items:
+            type: file
+          description: An array of files to upload
+          required: true  
+      responses:
+        200:
+          description: Images uploaded successfully
+          content:
+            application/json:
+              example:
+                uploadedImages:
+                  - detailId: '65a3c410f0a91e844db50288'
+                    secure_url: 'https://res.cloudinary.com/doiweqqmg/image/upload/v1705234893/detail/65a3c410f0a91e844db50288.png'
+                  - detailId: '65a3c410f0a91e844db50289'
+                    secure_url: 'https://res.cloudinary.com/doiweqqmg/image/upload/v1705231838/detail/65a3c410f0a91e844db50289.png'

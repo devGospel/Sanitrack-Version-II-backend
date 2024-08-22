@@ -1,0 +1,86 @@
+paths: 
+  /api/inspector:
+    get:
+      tags:
+        - INSPECTOR DASHBOARD
+      summary: GET INSPECTOR ROOMS
+      produces: 
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Fetched successfully
+
+  /api/inspector/room-details/{roomId}:
+    get:
+      tags:
+        - INSPECTOR DASHBOARD
+      summary: GET ROOM DETAILS BY ROOM ID ENDPOINT (along images)
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: path
+          name: roomId
+          type: string
+          default: 65a3e53f8e1cd614e43c1c4e
+          required: true  
+      responses:
+        200:
+          description: Room Details fetched successfully
+
+  /api/inspector/check-task/{roomId}:
+    patch:
+        tags:
+          - INSPECTOR DASHBOARD
+        summary: UPDATE TASK STATUS (isDone)
+        produces:
+          - application/json
+        parameters:
+          - in: header
+            name: authorization
+            description: access token
+            required: true
+            default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+          - in: path
+            name: roomId
+            description: ID of the room to update tasks for
+            required: true
+            type: string
+            default: 65a3e53f8e1cd614e43c1c4e
+
+          - in: body
+            name: updateTask
+            description: Array of task IDs to update
+            required: true
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  taskId:
+                    type: string
+                    description: ID of the task
+        responses:
+          200:
+            description: Room created successfully
+
+definitions:
+  updateTask:
+    type: array
+    items:
+      type: object
+      properties:
+        taskId:
+          type: string
+          description: ID of the task

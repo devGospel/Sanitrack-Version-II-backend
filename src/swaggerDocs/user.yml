@@ -1,0 +1,246 @@
+---
+paths:
+  /api/create-user:
+    post:
+      tags:
+        - USER ACCOUNT
+      summary: USER REGISTRATION ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: create user endpoint
+          description: It allows users to create account
+          required: true
+          schema:
+            $ref: "#/definitions/userAccount"
+      responses:
+        201:
+          description: Created successfully
+ 
+  /api/login:
+    post:
+      tags:
+        - USER ACCOUNT
+      summary: USER LOGIN ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: login endpoint
+          description: It alows registered users to login
+          required: true
+          schema:
+            $ref: "#/definitions/login"
+      responses:
+        200:
+          description: Login successful
+ 
+  /api/get-user:
+    get:
+      tags:
+        - USER ACCOUNT
+      summary: GET USER ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: query
+          name: userId
+          type: string
+          default: 64afbc5266f8942f989f615e
+      responses:
+        200:
+          description: Get user successful
+
+  /api/get-all-users:
+    get:
+      tags:
+        - USER ACCOUNT
+      summary: GET USER ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: query
+          name: page
+          type: number
+          default: 1
+          required: true
+        - in: query
+          name: documentCount
+          type: number
+          default: 10
+      responses:
+        200:
+          description: Get all users successful
+
+  /api/get-all-cleaner:
+    get:
+      tags:
+        - USER ACCOUNT
+      summary: GET CLEANER ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Get all users successful
+
+  /api/get-all-inspector:
+    get:
+      tags:
+        - USER ACCOUNT
+      summary: GET INSPECTOR ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Get all users successful
+
+  /api/get-unassigned-rooms:
+    get:
+      tags:
+        - USER ACCOUNT
+      summary: GET UNASSIGNED ROOMS ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Get all users successful
+
+  /api/update-username:
+    patch:
+      tags:
+        - USER ACCOUNT
+      summary: UPDATE USERNAME ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body
+          name: Update username endpoint
+          description: This endpoint updates users username
+          required: true
+          schema:
+            $ref: "#/definitions/updateUsername"
+      responses:
+        200:
+          description: Update username successful
+  
+  /api/delete-user/:
+    put:
+      tags:
+        - USER ACCOUNT
+      summary: DELETE USER ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        
+        - in: body
+          name: userId
+          description: UserId to be deleted
+          required: true
+          schema:
+            $ref: "#/definitions/deleteEmployee"
+      responses:
+        200:
+          description: Delete user successful
+
+  /api/update-user-status/:
+    put:
+      tags:
+        - USER ACCOUNT
+      summary: UPDATE STAFF STATUS
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        
+        - in: body
+          name: userId
+          description: UserId to be updated
+          required: true
+          schema:
+            $ref: "#/definitions/deleteEmployee"
+      responses:
+        200:
+          description: Delete user successful
+  
+definitions:
+  userAccount:
+    type: object
+    properties:
+      username:
+        type: string
+        default: lilstex  
+      role:
+        type: string
+        default: cleaner  
+      password:
+        type: string
+        default: password
+  
+  login:
+    type: object
+    properties:
+      username:
+        type: string
+        default: lilstex
+      password:
+        type: string
+        default: password
+  
+  updateUsername:
+    type: object
+    properties:
+      username:
+        type: string
+        default: lilstex  
+  
+  deleteEmployee:
+    type: object
+    properties:
+      staffId:
+        type: string
+        default: 54788556555
+  

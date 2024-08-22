@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "skipLibCheck":true, 
+    "resolveJsonModule": true // Add this line
+  },
+  "include": [
+    "src/**/*",
+  ],
+  "exclude": [
+    ".env-staging"
+  ],
+  "execMap": {
+    "ts": "ts-node"
+  }
+}

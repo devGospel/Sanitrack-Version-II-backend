@@ -1,0 +1,159 @@
+---
+paths:
+  /api/room/create-room:
+    post:
+      tags:
+        - ROOM
+      summary: CREATE ROOM ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body
+          name: Create room endpoint
+          description: This endpoint creates rooms
+          required: true
+          schema:
+            $ref: "#/definitions/createRoom"
+      responses:
+        200:
+          description: Room created successfully
+
+  /api/room/get-all-rooms:
+    get:
+      tags:
+        - ROOM
+      summary: GET ALL ROOMS ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Fetched successfully
+
+  /api/room/get-single-room:
+    get:
+      tags:
+        - ROOM
+      summary: GET ROOM BY ID ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: query
+          name: roomId
+          type: string
+          default: 64afbc5266f8942f989f615e
+          required: true  
+      responses:
+        200:
+          description: Room fetched successfully
+
+  /api/room/update-room:
+    put:
+      tags:
+        - ROOM
+      summary: UPDATE ROOM ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body
+          name: Update room endpoint
+          description: This endpoint updates users room
+          required: true
+          schema:
+            $ref: "#/definitions/updateRoom"
+      responses:
+        200:
+          description: Update successful
+
+  /api/room/delete-room:
+    delete:
+      tags:
+        - ROOM
+      summary: DELETE SINGLE ROOM BY ID ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: body
+          name: Delete room endpoint
+          description: This endpoint deletes single room
+          required: true
+          schema:
+            $ref: "#/definitions/deleteRoom"
+      responses:
+        200:
+          description: Room deleted successfully
+
+
+definitions:
+  createRoom:
+    type: object
+    properties:
+      roomName:
+        type: string
+        default: Room A
+      location:
+        type: string
+        default: Abuja
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              default: floor
+      
+  updateRoom:
+    type: object
+    properties:
+      roomId:
+        type: string
+        default: 64afbc5266f8942f989f615e
+      roomName:
+        type: string
+        default: Room A
+      location:
+        type: string
+        default: Abuja
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              default: floor
+       
+  deleteRoom:
+    type: object
+    properties:
+      roomId:
+        type: string
+        default: 64afbc5266f8942f989f615e

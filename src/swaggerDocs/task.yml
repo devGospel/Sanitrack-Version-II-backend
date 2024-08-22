@@ -1,0 +1,208 @@
+---
+paths:
+  /api/task/create-task:
+    post:
+      tags:
+        - TASK
+      summary: CREATE TASK ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body
+          name: Create task endpoint
+          description: This endpoint creates tasks
+          required: true
+          schema:
+            $ref: "#/definitions/createTask"
+      responses:
+        200:
+          description: Task created successfully
+
+  /api/task/get-all-tasks:
+    get:
+      tags:
+        - TASK
+      summary: GET ALL TASKS ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+      responses:
+        200:
+          description: Fetched successfully
+
+  /api/task/get-all-tasks-by-qrcode:
+    get:
+      tags:
+        - TASK
+      summary: GET ALL TASKS BY QRCODE ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: qrcode
+          description: QR code data encoded as string
+          required: true
+          type: string
+      responses:
+        200:
+          description: Fetched successfully
+
+  /api/task/get-single-task:
+    get:
+      tags:
+        - TASK
+      summary: GET TASK BY ID ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+        - in: query
+          name: taskId
+          type: string
+          default: 65a21a04c1b6c6b2efc0e3a4
+          required: true  
+      responses:
+        200:
+          description: Task fetched successfully
+
+  /api/task/update-task:
+    put:
+      tags:
+        - TASK
+      summary: UPDATE TASK ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body
+          name: Update task endpoint
+          description: This endpoint updates task
+          required: true
+          schema:
+            $ref: "#/definitions/updateTask"
+      responses:
+        200:
+          description: Task update successful
+
+  /api/task/submit-task:
+    patch:
+      tags:
+        - TASK
+      summary: SUBMIT TASK ENDPOINT
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: authorization
+          description: access token
+          required: true
+          default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+
+        - in: body
+          name: Submit task endpoint
+          description: This endpoint submits task
+          required: true
+          schema:
+            $ref: "#/definitions/submitTask"
+      responses:
+        200:
+          description: Task submission successful
+
+  /api/task/delete-task:
+      delete:
+        tags:
+          - TASK
+        summary: DELETE SINGLE TASK BY ID ENDPOINT
+        produces:
+          - application/json
+        parameters:
+          - in: header
+            name: authorization
+            description: access token
+            required: true
+            default: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzIwODQxODB9.60qxpvDKlXV3x4-XDf2GRWgEkuSvL_XuCYPbn5jil-0
+          - in: body
+            name: Delete task endpoint
+            description: This endpoint deletes single task
+            required: true
+            schema:
+              $ref: "#/definitions/deleteTask"
+        responses:
+          200:
+            description: Task deleted successfully
+
+
+definitions:
+  createTask:
+    type: object
+    properties:
+      inspectorId:
+        type: string
+        default: 65a16f16021217a0472cee23
+      cleanerId:
+        type: string
+        default: 65a16d095e375dc1527e2aca
+      roomId:
+        type: string
+        default: 65a20e8990b510fb131ca021
+      
+  updateTask:
+    type: object
+    properties:
+      taskId:
+        type: string
+        default: 64afbc5266f8942f989f615e
+      inspectorId:
+        type: string
+        default: 64afbc5266f8942f989f615e
+      cleanerId:
+        type: string
+        default: 64afbc5266f8942f989f615e
+      roomId:
+        type: string
+        default: 64afbc5266f8942f989f615e
+
+  submitTask:
+    type: object
+    properties:
+      taskId:
+        type: string
+        default: 64afbc5266f8942f989f615e
+      details:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+              default: floor
+            isDone:
+              type: boolean
+              default: true
+   
+  deleteTask:
+    type: object
+    properties:
+      taskId:
+        type: string
+        default: 64afbc5266f8942f989f615e
